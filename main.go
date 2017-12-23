@@ -10,7 +10,7 @@ type Error struct {
   Err error
 }
 
-func WrapErr(orig error, err error) *Error {
+func WrapErr(orig error, err error) (error) {
   if err == nil {
     return orig
   }
@@ -37,14 +37,14 @@ func Errorf(message string, args ...interface{}) (error) {
   return fmt.Errorf(message, args...)
 }
 
-func Wrap(orig error, message string) (*Error) {
+func Wrap(orig error, message string) (error) {
   return &Error{
     Orig: orig,
     Err: New(message),
   }
 }
 
-func Wrapf(orig error, message string, args ...interface{}) (*Error) {
+func Wrapf(orig error, message string, args ...interface{}) (error) {
   return &Error{
     Orig: orig,
     Err: Errorf(message, args...),
