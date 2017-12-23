@@ -11,6 +11,10 @@ type Error struct {
 }
 
 func WrapErr(orig error, err error) *Error {
+  if err == nil {
+    return orig
+  }
+
   return &Error{
     Orig: orig,
     Err: err,
