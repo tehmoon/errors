@@ -15,6 +15,10 @@ func WrapErr(orig error, err error) (error) {
     return orig
   }
 
+  if orig == nil {
+    return err
+  }
+
   return &Error{
     Orig: orig,
     Err: err,
