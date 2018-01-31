@@ -33,6 +33,14 @@ func (err Error) Error() (string) {
   return fmt.Sprintf("%s: %s", err.Err, err.Orig.Error())
 }
 
+func (err Error) Root() (error) {
+  if orig, ok := err.Orig.(*Error); ok {
+    return orig.Root()
+  }
+
+  return err.Orig
+}
+
 func New(message string) (error) {
   return errors.New(message)
 }
