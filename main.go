@@ -41,6 +41,22 @@ func (err Error) Root() (error) {
   return err.Orig
 }
 
+func (err Error) Has(T interface{}) (bool) {
+  if err.Err == T {
+    return true
+  }
+
+  if orig, ok := err.Orig.(*Error); ok {
+    return orig.Has(T)
+  }
+
+  if err.Orig == T {
+    return true
+  }
+
+  return false
+}
+
 func New(message string) (error) {
   return errors.New(message)
 }
