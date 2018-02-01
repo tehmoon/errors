@@ -33,6 +33,30 @@ func (err Error) Error() (string) {
   return fmt.Sprintf("%s: %s", err.Err, err.Orig.Error())
 }
 
+func (err Error) Root() (error) {
+  if orig, ok := err.Orig.(*Error); ok {
+    return orig.Root()
+  }
+
+  return err.Orig
+}
+
+func (err Error) Has(T interface{}) (bool) {
+  if err.Err == T {
+    return true
+  }
+
+  if orig, ok := err.Orig.(*Error); ok {
+    return orig.Has(T)
+  }
+
+  if err.Orig == T {
+    return true
+  }
+
+  return false
+}
+
 func New(message string) (error) {
   return errors.New(message)
 }
