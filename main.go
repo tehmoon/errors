@@ -30,6 +30,10 @@ func (err Error) Error() (string) {
     return fmt.Sprintf("%s: %s", err.Err.Error(), orig.Error())
   }
 
+  if err.Orig == nil {
+    return fmt.Sprintf("%s", err.Err)
+  }
+
   return fmt.Sprintf("%s: %s", err.Err, err.Orig.Error())
 }
 
